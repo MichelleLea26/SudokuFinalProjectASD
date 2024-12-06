@@ -1,3 +1,12 @@
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2024/2025
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026231214 - Michelle Lea Amanda
+ * 2 - 5026231025 - Nabila Rahadatul Aisy
+ */
+
 package sudoku;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,10 +23,10 @@ public class Cell extends JTextField {
     public static final Color BG_GIVEN = new Color(240, 240, 240); // RGB
     public static final Color FG_GIVEN = Color.BLACK;
     public static final Color FG_NOT_GIVEN = Color.GRAY;
-    public static final Color BG_TO_GUESS  = Color.YELLOW;
-    public static final Color BG_CORRECT_GUESS = new Color(0, 216, 0);
-    public static final Color BG_WRONG_GUESS   = new Color(216, 0, 0);
-    public static final Font FONT_NUMBERS = new Font("OCR A Extended", Font.PLAIN, 28);
+    public static final Color BG_TO_GUESS  = new Color(255, 241, 166);
+    public static final Color BG_CORRECT_GUESS = new Color(180, 249, 165);
+    public static final Color BG_WRONG_GUESS   = new Color(243, 168, 188);
+    public static final Font FONT_NUMBERS = new Font("Poppins", Font.BOLD, 28);
 
     // Define properties (package-visible)
     /** The row and column number [0-8] of this cell */

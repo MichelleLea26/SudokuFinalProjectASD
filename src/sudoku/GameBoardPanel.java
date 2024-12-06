@@ -1,3 +1,12 @@
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2024/2025
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026231214 - Michelle Lea Amanda
+ * 2 - 5026231025 - Nabila Rahadatul Aisy
+ */
+
 package sudoku;
 import java.awt.*;
 import java.util.Random;
@@ -96,6 +105,8 @@ public class GameBoardPanel extends JPanel {
             // Get a reference of the JTextField that triggers this action event
             Cell sourceCell = (Cell) e.getSource();
 
+            String textEntered = sourceCell.getText();
+
             // Retrieve the int entered
             int numberIn = Integer.parseInt(sourceCell.getText());
             // For debugging
@@ -106,12 +117,37 @@ public class GameBoardPanel extends JPanel {
              * Update the cell status sourceCell.status,
              * and re-paint the cell via sourceCell.paint().
              */
+
+            try {
+                numberIn = Integer.parseInt(textEntered);
+
+                if (numberIn < 1 || numberIn > 9) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid number between 1 and 9.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                    sourceCell.setText(""); // Clear the invalid input
+                } else {
+                    // For debugging
+                    System.out.println("You entered " + numberIn);
+
+                    // Check if the entered number matches the correct number
+                    if (numberIn == sourceCell.number) {
+                        sourceCell.status = CellStatus.CORRECT_GUESS;
+                    } else {
+                        sourceCell.status = CellStatus.WRONG_GUESS;
+                    }
+
+                    sourceCell.paint(); // Re-paint the cell based on its status
+                }
             if (numberIn == sourceCell.number) {
                sourceCell.status = CellStatus.CORRECT_GUESS;
             } else {
                 sourceCell.status = CellStatus.WRONG_GUESS;
             }
-            sourceCell.paint();   // re-paint this cell based on its status
+            sourceCell.paint();// re-paint this cell based on its status
+            } catch (NumberFormatException ex) {
+                // If the entered text is not a valid number
+                JOptionPane.showMessageDialog(null, "Please enter a valid number between 1 and 9.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                sourceCell.setText(""); // Clear the invalid input
+            }
 
             /*
              * [TODO 6] (later)
