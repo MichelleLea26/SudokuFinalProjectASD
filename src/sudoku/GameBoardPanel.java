@@ -1,10 +1,14 @@
 package sudoku;
 import java.awt.*;
+import java.util.Random;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class GameBoardPanel extends JPanel {
-    private static final long serialVersionUID = 1L;  // to prevent serial warning
+    private static final long serialVersionUID = 1L; // to prevent serial warning
+    //private Puzzle puzzle;
+    private Random random;
+    //private Cell[][] cells;
 
     // Define named constants for UI sizes
     public static final int CELL_SIZE = 60;   // Cell width/height in pixels
@@ -26,6 +30,7 @@ public class GameBoardPanel extends JPanel {
      * Constructor
      */
     public GameBoardPanel() {
+        puzzle = new Puzzle();
         super.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE));  // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
@@ -35,6 +40,8 @@ public class GameBoardPanel extends JPanel {
                 super.add(cells[row][col]);   // JPanel
             }
         }
+
+
 
         // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
         //  Cells (JTextFields)
@@ -56,9 +63,9 @@ public class GameBoardPanel extends JPanel {
      * Generate a new puzzle; and reset the game board of cells based on the puzzle.
      * You can call this method to start a new game.
      */
-    public void newGame() {
+    public void newGame(Puzzle.DifficultyLevel level) {
         // Generate a new puzzle
-        puzzle.newPuzzle(2);
+        puzzle.newPuzzle(level);
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -67,7 +74,6 @@ public class GameBoardPanel extends JPanel {
             }
         }
     }
-
     /**
      * Return true if the puzzle is solved
      * i.e., none of the cell have status of TO_GUESS or WRONG_GUESS
@@ -116,5 +122,28 @@ public class GameBoardPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Congratulation!");
             }
         }
+    }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Memastikan komponen lain tetap digambar
+
+        Graphics2D g2d = (Graphics2D) g; // Konversi ke Graphics2D
+        g2d.setColor(Color.BLACK); // Warna garis
+
+        // Garis horizontal dan vertikal
+        for (int i = 0; i <= SudokuConstants.GRID_SIZE; i++) {
+            // Ketebalan garis setiap sub-grid
+            if (i % 3 == 0) {
+                g2d.setStroke(new BasicStroke(3)); // Garis tebal
+            } else {
+                g2d.setStroke(new BasicStroke(1)); // Garis tipis
+            }
+            // Garis horizontal
+            g2d.drawLine(0, i * CELL_SIZE, BOARD_WIDTH, i * CELL_SIZE);
+            // Garis vertikal
+            g2d.drawLine(i * CELL_SIZE, 0, i * CELL_SIZE, BOARD_HEIGHT);
+        }
+    }
+    public Cell[][] getCells() {
+        return cells;
     }
 }
