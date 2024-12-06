@@ -26,6 +26,7 @@ public class Cell extends JTextField {
     int number;
     /** The status of this cell defined in enum CellStatus */
     CellStatus status;
+    boolean isGiven;
 
     /** Constructor */
     public Cell(int row, int col) {
@@ -40,6 +41,7 @@ public class Cell extends JTextField {
     /** Reset this cell for a new game, given the puzzle number and isGiven */
     public void newGame(int number, boolean isGiven) {
         this.number = number;
+        this.isGiven = isGiven;
         status = isGiven ? CellStatus.GIVEN : CellStatus.TO_GUESS;
         paint();    // paint itself
     }
@@ -62,6 +64,15 @@ public class Cell extends JTextField {
             super.setBackground(BG_CORRECT_GUESS);
         } else if (status == CellStatus.WRONG_GUESS) {    // from TO_GUESS
             super.setBackground(BG_WRONG_GUESS);
+        }
+    }
+
+    public boolean isGiven() {
+        return isGiven;
+    }
+    public void clear() {
+        if (!isGiven) {
+            setText(""); // Clear text
         }
     }
 }
